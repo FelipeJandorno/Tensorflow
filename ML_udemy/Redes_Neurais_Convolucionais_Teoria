@@ -1,0 +1,58 @@
+Redes Neurais Convolucionais
+
+- Usada para visão computacional
+- Em geral, é melhor do que SVM (Support Vector Machine)
+
+Uma rede neural convolucional não utiliza todas as entradas, na verdade, ela identifica as melhores características para realizar a análise completa. Além disso, apesar de usar uma rede neural tradicional, no começo, ela transforma os dados na camada de entrada.
+
+Quais características utilizar? A própria rede neural consegue definir isto. (como ela realiza esse processo?)
+
+Etapas da criação do modelo
+etapa 1 - Operador de convolução
+etapa 2 - Pooling
+etapa 3 - Flattening
+etapa 4 - Rede Neural Densa
+
+______________________________________________________________
+
+Convolução é o processo de adicionar cada elemento da imagem para seus vizinhos, ponderado por um kernel (matriz)
+
+Kernel:
+
+Etapa 1 - Operador de convolução
+Produto da matriz que representa a imagem com o kernel (detector de características), o qual realça as principais características que deverão ser analisadas pela rede neural.
+
+Quanto maior for o valor presente na matriz de mapeamento das características, mais próximo do filtro de detecção as características do kernel estão.
+
+Com a matriz de mapeamento, as matrizes são reduzidas, o que aumenta o seu tempo de processamento.
+
+Algumas informações sobre o dataframe podem ser perdidas, porém, o propósito é detectar as partes principais.
+
+Posteriormente, após a obtenção do mapa de características é aplicada a função de ativação 'relu', a qual transforma números negativos em zero e mantém os números positivos sem alteração. Isto facilita a detecção de padrões (retira os pontos mais escuros)
+
+Camada de convolução: Aplicação dos mapas de características para escolha do melhor mapa.
+
+_______________________________________________________________
+
+Etapa 2 - Pooling
+
+Serve para enfatizar as características principais da imagem
+
+Esse processo é realizado no mapa de características. A partir de uma matriz de tamanho NxN, o MaxPooling seleciona o maior valor numérico presente na matriz e o determina como representante daquela matriz. (redução dos dados)
+
+- O Pooling seleciona as características mais relevantes e, assim, reduz problemas com overfitting, isto é a adaptação excessiva do modelo aos dados de treinamento, e ruídos desnecessários.
+
+Max polling (mínimo, média)
+
+_______________________________________________________________
+
+Etapa 3 - Flatting
+
+Transforma uma matriz em um vetor, pois, facilita a aplicação das informações na rede neural densa.
+
+_______________________________________________________________
+
+Etapa 4 - Rede Neural Densa
+
+Treinamento com descida do gradiente
+Além do ajuste dos pesos, é feito também a mudança do detector de características

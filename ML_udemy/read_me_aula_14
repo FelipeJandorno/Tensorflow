@@ -1,0 +1,14 @@
+Filters: Determina a quantidade de filtros que serão utilizados na rede neural convolucional
+
+Kernel_size: É utilizado em conjunto com os filtros e com o detector de características para montar o mapa de características do dataset
+
+Detector de características: A matriz da imagem é reduzida a um conjunto de 0 ou 1. Nesse contexto, o detector de características realiza diversas análises com conjuntos reduzidos de elementos da matriz inicial. As análises, por sua vez, são, na verdade, a soma de todos os elementos presentes na nova matriz formada.
+
+Padding: Pode ter dois valores 'same' ou 'valid'. É o preenchimento realizado em matrizes para retornar dados com o mesmo tamanho da matriz kernel. Já o padding valid desconsidera a última camada. Segundo a video aula, utiliza-se o padding same na camada de convolução e o padding valid na camada de Max Pooling
+
+Pooling: Reduz a matriz em uma matriz menor e, em seguida, busca o maior valor presente nessa matriz. O maior valor encontrado representará a matriz como um todo em uma nova matriz
+
+Flatting: Condensa a matriz em um único vetor antes de enviar as informações para as camadas densas do seu modelo
+
+________________________________________________
+model.compile(loss='sparse_categorical_crossentropy', optimizer='Adam', metrics=['sparse_categorical_accuracy'])
