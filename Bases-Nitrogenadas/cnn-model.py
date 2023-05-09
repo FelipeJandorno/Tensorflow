@@ -1,8 +1,7 @@
 import tensorflow as tf
 import pandas as pd
 import numpy as np
-#import sklearn as sk
-#import pyplot as plt
+
 
 # ================ PRÉ PROCESSAMENTO DE DADOS ================
 # Lê o arquivo CSV
@@ -18,7 +17,8 @@ df_h.columns = ['Wavenumber', 'Ade + Cit']
 # Trocando as vírgulas dos dados por ponto
 df_c['Wavenumber'], df_c['Adenine'] = df_c['Wavenumber'].str.replace(',', '.'), df_c['Adenine'].str.replace(',', '.')
 df_g['Wavenumber'], df_g['Citosine'] = df_g['Wavenumber'].str.replace(',', '.'), df_g['Citosine'].str.replace(',', '.')
-df_h['Wavenumber'], df_h['Ade + Cit'] = df_h['Wavenumber'].str.replace(',', '.'), df_h['Ade + Cit'].str.replace(',', '.')
+df_h['Wavenumber'], df_h['Ade + Cit'] = df_h['Wavenumber'].str.replace(',', '.'),\
+    df_h['Ade + Cit'].str.replace(',', '.')
 
 # Alterando o tipo de variável dos dataframes
 df_c['Wavenumber'], df_c['Adenine'] = df_c['Wavenumber'].astype('float64'), df_c['Adenine'].astype('float64')
@@ -32,7 +32,7 @@ df['Ade + Cit'] = df_h['Ade + Cit']
 print(df.dtypes)
 
 # ================ SEPARAÇÃO DE DADOS PARA TREINO E TESTE ================
-#(x_train, y_train), (x_test, y_test) =
+
 
 # ================ SEPARAÇÃO DAS FEATURES ================
 y_class = ['Wavenumber', 'Adenine', 'Citosine', 'Ade + Cit']
@@ -44,5 +44,3 @@ model.add(tf.keras.layers.Conv2D(filters=35, activation='relu', kernel_size=3, p
 
 # ================ COMPILAÇÃO DO MODELO ================
 model.compile()
-
-
