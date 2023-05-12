@@ -5,7 +5,7 @@ import numpy as np
 #import sklearn as sk
 #import pyplot as plt
 
-# ================ PRÉ PROCESSAMENTO DE DADOS ================
+# ================ PRÉ PROCESSAMENTO DE DADOS ================ #
 # Lê o arquivo CSV
 
 df_all = pd.DataFrame(dtype="float64")
@@ -21,7 +21,7 @@ for filename in enumerate(os.listdir(path)):
     # Adicionando a label das colunas no dataframe
     df.columns = ['Wavenumber', 'Amostra {}'.format(filename[0])]
 
-    # Juntando todos os dados em colunas
+    # Juntando todos os dados em colunas no dataframe df_all
     df_all['Amostra {}'.format(filename[0])] = df['Amostra {}'.format(filename[0])]
 
 # Procurando o maior valor do dataFrame
@@ -33,7 +33,7 @@ for row in range(df_all.shape[0]):
         if max_value < df_all[row][col]:
             max_value = df_all[row][col]
 
-# Normalizando os dados
+# Normalizando os dados do dataframe
 for row in range(df_all.shape[0]):
     for col in range(df_all.shape[1]):
         df_all[row][col] = df_all[row][col]/max_value
@@ -46,7 +46,7 @@ for col in range(df.shape[1]):
     new_name = "Amostra {}".format(col)
     df = df.rename(columns={df.columns[col]: new_name})
 
-# ================ SEPARAÇÃO DE DADOS PARA TREINO E TESTE ================
+# ================ SEPARAÇÃO DE DADOS PARA TREINO E TESTE ================ #
 #(x_train, y_train), (x_test, y_test) =
 
 # ================ SEPARAÇÃO DAS FEATURES ================
