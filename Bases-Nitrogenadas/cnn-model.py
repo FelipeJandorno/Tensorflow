@@ -30,9 +30,11 @@ def read_files(path):
     # Separando uma coluna de Wavenumber (todas são iguais)
     df_wv = df_wv['Wavenumber 0']
     return df_all, df_wv
-
 df_all, df_wv = read_files("CSV/")
 
+# Leitura do arquivo 2° tentativa
+def read_files2(path):
+    print("... reading ...")
 # Convertendo os dataframes para numpy
 df_all = df_all.to_numpy(dtype="float64")
 df_wv = df_wv.to_numpy(dtype="float64")
