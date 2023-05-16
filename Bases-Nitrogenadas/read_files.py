@@ -69,6 +69,7 @@ def read_file5(path):
         df = pd.read_csv(path+filename)
         df = df.to_numpy()
         arr = np.insert(arr, arr.shape[0], [df], axis=0)
+    arr = np.delete(arr, [1, 0, 0], axis=0)
     print(arr.shape)
 
 
