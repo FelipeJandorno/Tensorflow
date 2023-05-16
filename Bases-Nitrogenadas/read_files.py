@@ -72,5 +72,26 @@ def read_file5(path):
     arr = np.delete(arr, [1, 0, 0], axis=0)
     print(arr.shape)
 
+# ========================================= #
+arr = np.array([
+    #abs, wv
+    [[1, 0],
+    [4, 1],
+    [5, 0]],
+    [[3, 0],
+     [8, 0],
+     [2, 0]]
+])
 
-read_file5("CSV/")
+print('x: {}, y: {}, z: {}'.format(arr.shape[0], arr.shape[1], arr.shape[2]))
+def norm_arr(arr, wv_max_value=0, abs_max_value=0):
+# Normalizando os valores de absorbancia
+    for x in range(arr.shape[0]):
+        for y in range(arr.shape[1]):
+            for z in range(arr.shape[2]):
+                if x==1 and wv_max_value < arr[z][y][x]:
+                    wv_max_value = arr[z][y][x]
+                elif x==0 and abs_max_value < arr[z][y][x]:
+                    abs_max_value = arr[z][y][x]
+    return abs_max_value, wv_max_value
+print(norm_arr(arr))
