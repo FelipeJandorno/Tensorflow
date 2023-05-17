@@ -2,7 +2,7 @@ import tensorflow as tf
 import pandas as pd
 import os
 import numpy as np
-import xarray as xr
+# import xarray as xr
 from sklearn.model_selection import train_test_split
 
 
@@ -45,37 +45,34 @@ def normalize_array(arr, wv_max_value=0, abs_max_value=0):
                 else:
                     arr[z][y][x] = arr[z][y][x]/abs_max_value
     return arr
-df_all = normalize_array(df_all)
+df = normalize_array(df_all)
 
-# Transformando a matriz numpy normalizada em dataframe
-df = pd.DataFrame(data=df_all, dtype="float64")
+# Reformulação dos dados
+df = np.reshape(df, (df.shape[0], 1, df.shape[1], df.shape[2]))
+df = np.expand_dims(df, axis=2)
 
-# Renomeando todas as colunas conforme sua numeração
-# for col in range(df.shape[1]):
-    # new_name = "Amostra {}".format(col)
-    # df = df.rename(columns={df.columns[col]: new_name})
-
-# Adicionando a coluna de Wavenumber no dataframe
-# df['Wavenumber'] = df_wv
-
-# df = df.to_numpy()
-# new_arr = []
-
-#for row in enumerate(df):
-#new_arr = new_arr.concat(np.array([row[0]]))
-
-#print(new_arr.shape)
-#print(new_arr)
-
-# print('dim: ', df.ndim)
-# print(df)
 # ================ SEPARAÇÃO DE DADOS PARA TREINO E TESTE ================ #
-# train, test = train_test_split(df, train_size=0.8)
-# print('train: ', train.shape, ' test: ', test.shape)
+train, test = train_test_split(df, train_size=0.8)
+train_target = np.array([0, 1])
+
+
+num_classes = np.max(train_target) + 1
+train_target = tf.keras.utils.to_categorical(train_target, num_classes=num_classes)
 
 # ================ SEPARAÇÃO DAS FEATURES ================
+print('train: ', train.shape)
+print('target: ', train_target.shape)
 
 # ================ CRIAÇÃO DO MODELO ================
-
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Conv1D(2, 3, activation='relu', input_shape=(train.shape[1:])))
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(2, activation='softmax'))
 
 # ================ COMPILAÇÃO DO MODELO ================
+model.compile(optimizer='adam', loss="categorical_crossentropy", metrics=['accuracy'])
+model.fit(train, train_target, epochs=2)
+
+
+# Adaptar o train_target para virar (1, 12821, 1) e tornar a matriz em unidimensional
+# Alterar método de renomeação e normalização dos dados
