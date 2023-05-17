@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 
+# ================leitura==================
 def read_files(path):
     df = pd.DataFrame(dtype="float64")
     arr = np.zeros((12821, 2))
@@ -72,7 +73,7 @@ def read_file5(path):
     arr = np.delete(arr, [1, 0, 0], axis=0)
     print(arr.shape)
 
-# ========================================= #
+# ================normalização============= #
 arr = np.array([
     #abs, wv
     [[1, 0],
@@ -82,8 +83,6 @@ arr = np.array([
      [8, 0],
      [2, 0]]
 ])
-
-print('x: {}, y: {}, z: {}'.format(arr.shape[0], arr.shape[1], arr.shape[2]))
 def norm_arr(arr, wv_max_value=0, abs_max_value=0):
 # Normalizando os valores de absorbancia
     for x in range(arr.shape[0]):
@@ -94,4 +93,23 @@ def norm_arr(arr, wv_max_value=0, abs_max_value=0):
                 elif x==0 and abs_max_value < arr[z][y][x]:
                     abs_max_value = arr[z][y][x]
     return abs_max_value, wv_max_value
-print(norm_arr(arr))
+def normalize_data(df_all, max_value = 0):
+    try:
+        for row in range(df_all.shape[0]):
+            for col in range(df_all.shape[1]):
+                if max_value < df_all[row][col]:
+                    max_value = df_all[row][col]
+
+        # Normalizando os dados do dataframe df_all
+        for row in range(df_all.shape[0]):
+                for col in range(df_all.shape[1]):
+                     df_all[row][col] = df_all[row][col]/max_value
+    except IndexError:
+        for row in range(df_all.shape[0]):
+            if row > max_value:
+                max_value = row
+
+            # Normalizando os dados do dataframe df_wv
+        for row in range(df_all.shape[0]):
+            df_all[row] = df_all[row] / max_value
+    return df_all

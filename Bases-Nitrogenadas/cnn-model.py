@@ -2,6 +2,7 @@ import tensorflow as tf
 import pandas as pd
 import os
 import numpy as np
+import xarray as xr
 from sklearn.model_selection import train_test_split
 
 
@@ -27,27 +28,6 @@ df_all = read_files("CSV/")
 df_all = df_all.astype("float64")
 
 # Procurando o maior valor do dataFrame df_all
-def normalize_data(df_all, max_value = 0):
-    try:
-        for row in range(df_all.shape[0]):
-            for col in range(df_all.shape[1]):
-                if max_value < df_all[row][col]:
-                    max_value = df_all[row][col]
-
-        # Normalizando os dados do dataframe df_all
-        for row in range(df_all.shape[0]):
-                for col in range(df_all.shape[1]):
-                     df_all[row][col] = df_all[row][col]/max_value
-    except IndexError:
-        for row in range(df_all.shape[0]):
-            if row > max_value:
-                max_value = row
-
-            # Normalizando os dados do dataframe df_wv
-        for row in range(df_all.shape[0]):
-            df_all[row] = df_all[row] / max_value
-    return df_all
-
 def normalize_array(arr, wv_max_value=0, abs_max_value=0):
     # Separando o maior valor de comprimento de onda e de absorbância
     for x in range(arr.shape[0]):
@@ -67,12 +47,8 @@ def normalize_array(arr, wv_max_value=0, abs_max_value=0):
     return arr
 df_all = normalize_array(df_all)
 
-# df_all = normalize_data(df_all)
-# df_wv = normalize_data(df_wv)
-
 # Transformando a matriz numpy normalizada em dataframe
-# df = pd.DataFrame(data=df_all, dtype="float64")
-# df_wv = pd.DataFrame(data=df_wv, dtype="float64")
+df = pd.DataFrame(data=df_all, dtype="float64")
 
 # Renomeando todas as colunas conforme sua numeração
 # for col in range(df.shape[1]):
