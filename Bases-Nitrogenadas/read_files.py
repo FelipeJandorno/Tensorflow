@@ -71,7 +71,15 @@ def read_file5(path):
         df = df.to_numpy()
         arr = np.insert(arr, arr.shape[0], [df], axis=0)
     arr = np.delete(arr, [1, 0, 0], axis=0)
-    print(arr.shape)
+    return  arr
+
+def read_files6(path):
+    df_all = pd.DataFrame(dtype="float64")
+    for filename in enumerate(os.listdir(path)):
+        df = pd.read_csv(path+filename[1])
+        df.columns = ['Wavenumber {}'.format(filename[0]), 'Amostra {}'.format(filename[0])]
+    return 0
+print(read_files6("CSV/"))
 
 # ================normalização============= #
 arr = np.array([
@@ -113,3 +121,21 @@ def normalize_data(df_all, max_value = 0):
         for row in range(df_all.shape[0]):
             df_all[row] = df_all[row] / max_value
     return df_all
+
+def normalize_array(arr, wv_max_value=0, abs_max_value=0):
+    # Separando o maior valor de comprimento de onda e de absorbância
+    for x in range(arr.shape[0]):
+        for y in range(arr.shape[1]):
+            for z in range(arr.shape[2]):
+                if x==1 and wv_max_value < arr[z][y][x]:
+                    wv_max_value = arr[z][y][x]
+                elif x==0 and abs_max_value < arr[z][y][x]:
+                    abs_max_value = arr[z][y][x]
+    for x in range(arr.shape[0]):
+        for y in range(arr.shape[1]):
+            for z in range(arr.shape[2]):
+                if x:
+                    arr[z][y][x] = arr[z][y][x]/wv_max_value
+                else:
+                    arr[z][y][x] = arr[z][y][x]/abs_max_value
+    return arr
