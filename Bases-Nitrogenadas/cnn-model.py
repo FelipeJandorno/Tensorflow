@@ -62,9 +62,16 @@ def train_target_group(train):
     return train_target.astype("int64")
 
 train_target = train_target_group(train)
-
 num_classes = np.max(train_target) + 1
+
 train_target = tf.keras.utils.to_categorical(train_target, num_classes=num_classes)
+
+train_target = np.array([[0, 0, 1],
+                         [1, 0]], dtype=object)
+# train = np.array(train)
+# train_target = np.array(train_target)
+
+# train_target = np.reshape(train_target, (1, train_target.shape[0], train_target[1]))
 
 # ================ SEPARAÇÃO DAS FEATURES ================
 print('train: ', train.shape)
